@@ -1,0 +1,23 @@
+body  {
+    background-color: antiquewhite;
+    margin: 0;
+}
+.heading {
+    width: 100%;
+    text-align: center;
+}
+#input, #output {
+    position: absolute;
+    width: 95%;
+    height: 200px;
+    font-size: 20px;
+    margin: 10px 0;
+    resize: none;
+    left: 2.5%;
+}
+#input {
+    top: 20%;
+}
+#output {
+    top: 50%;
+}
