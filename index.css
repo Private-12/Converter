@@ -21,3 +21,15 @@ body  {
 #output {
     top: 50%;
 }
+#switch {
+    position: absolute;
+    bottom: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 20px;
+    background-color: lightgray;
+    border: 1px solid gray;
+    border-radius: 5px;
+    cursor: pointer;
+    user-select: none;
+}
