@@ -3,6 +3,7 @@ let functionCheck = ConvertAsciiToBinary
 function Convertcheck() {
     var input = document.getElementById("input").value
     functionCheck(input)
+    Charsetcheck()
 }
 
 function Switch() {
@@ -37,3 +38,25 @@ function toBinary(ascii) {
 function binaryToText(binary) {
   return binary.split(' ').map(bin => String.fromCharCode(parseInt(bin, 2))).join('')
 }
+
+function Charsetcheck() {
+    var inputbox = document.getElementById("input");
+    var char = inputbox.value.charAt(inputbox.value.length - 1);
+    if (functionCheck == ConvertAsciiToBinary) {return}
+    if (functionCheck == ConvertBinaryToAscii) { 
+        if (!/^[01 ]*$/.test(char))
+    {
+            inputbox.value = inputbox.value.slice(0, -1);
+            inputbox.classList.add("error");
+            outputval = document.getElementById("output").value
+            document.getElementById("output").value = "Invalid character detected! Only 0 , 1 and spaces are allowed.";
+            setTimeout(() => {
+                inputbox.classList.remove("error");
+                document.getElementById("output").value = outputval;
+            }, 1000);
+        }
+    }
+}
+    
+
+

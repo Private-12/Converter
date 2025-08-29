@@ -33,3 +33,8 @@ body  {
     cursor: pointer;
     user-select: none;
 }
+.error {
+    color: red;
+    font-weight: bold;
+    border: 5px solid red;
+}
