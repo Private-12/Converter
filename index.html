@@ -5,12 +5,32 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Ascii to Binary converter</title>
         <link rel="stylesheet" href="index.css">
+        <link rel="icon" type="image/x-icon" href="Favicon.png">
         <script src="index.js" defer></script>
     </head>
     <body>
-        <h1 class="heading" id="heading">Ascii to Binary converter</h1>
-        <textarea id="input" placeholder="Enter ASCII text here..."></textarea>
+        <h1 class="heading" id="heading">
+            <span id="lang1">Ascii</span>
+             to 
+            <span id="lang2">Binary</span> 
+            converter
+        </h1>
+        <textarea id="input" placeholder="Enter ASCII text here...">
+            <img src="copy.png" alt="">
+        </textarea>
         <textarea id="output" placeholder="Binary output will appear here..." readonly></textarea>
-        <img id="switch" onclick="Switch()" src="Switch.png" alt="Switch">
+        <img id="switch" onclick="swap()" src="Switch.png" alt="Switch">
+        <select name="Language" id="language" onchange="changeLanguage(this.value)">
+            <option value="Ascii">Ascii</option>
+            <option value="Binary">Binary</option>
+            <option value="Decimal">Decimal</option>
+            <option value="Hexadecimal">Hexadecimal</option>
+        </select>
+        <select name="Language" id="language2" onchange="changeLanguage2(this.value)">
+            <option value="Ascii">Ascii</option>
+            <option value="Binary" selected>Binary</option>
+            <option value="Decimal">Decimal</option>
+            <option value="Hexadecimal">Hexadecimal</option>
+        </select>
     </body>
 </html>
