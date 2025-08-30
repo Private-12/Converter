@@ -8,15 +8,42 @@ var ascii = "Ascii";
 var binary = "Binary";
 var hexadecimal = "Hexadecimal";
 var decimal = "Decimal";
+var octal = "Octal";
 
 window.onload = function() {
-    inputstate = ascii;
-    outputstate = binary;
+    if (localStorage.getItem("inputstate")) {
+        inputstate = localStorage.getItem("inputstate");
+        document.getElementById("lang1").innerText = inputstate;
+        document.getElementById("input").placeholder = "Enter " + inputstate + " text here";
+
+    } else {
+        inputstate = ascii;
+    }
+    if (localStorage.getItem("outputstate")) {
+        outputstate = localStorage.getItem("outputstate");
+        document.getElementById("lang2").innerText = outputstate;
+        document.getElementById("output").placeholder = outputstate + " Output will appear here";
+    }   else {
+        outputstate = binary;
+    }
     select1 = document.getElementById("language");
     select2 = document.getElementById("language2");
     inputbox = document.getElementById("input");
     outputbox = document.getElementById("output");
     document.getElementById("input").addEventListener('input', converter);
+    document.title = inputstate + " to " + outputstate + " Converter";
+    if (localStorage.getItem("selected1")) {
+        select1.value = localStorage.getItem("selected1");
+    }
+    if (localStorage.getItem("selected2")) {
+        select2.value = localStorage.getItem("selected2");
+    }
+    if (localStorage.getItem("input")) {
+        inputbox.value = localStorage.getItem("input");
+    }
+    if (localStorage.getItem("output")) {
+        outputbox.value = localStorage.getItem("output");
+    }
 }
 
 function changeLanguage(lang) {
@@ -28,6 +55,8 @@ function changeLanguage(lang) {
     swap()
     converter()
     swap()
+    localStorage.setItem("inputstate", inputstate);
+    localStorage.setItem("selected1", select1.value);
 }
 function changeLanguage2(lang) {
     outputstate = lang;
@@ -36,9 +65,13 @@ function changeLanguage2(lang) {
     outputbox.placeholder = lang + " Output will appear here";
     document.title = inputstate + " to " + lang + " Converter";
     converter()
+    localStorage.setItem("outputstate", outputstate);
+    localStorage.setItem("selected2", select2.value);
 }
 function converter() {
     outputbox.value = convertfromdecimal(converttodecimal());
+    localStorage.setItem("input", inputbox.value);
+    localStorage.setItem("output", outputbox.value);
     checklastchar();
 }
 
@@ -68,6 +101,12 @@ function converttodecimal() {
         if (chunk) arr.push(parseInt(chunk, 10));
         }
     }
+    else if (inputstate == octal) {
+        let chunks = inputbox.value.trim().split(/\s+/);
+        for (let chunk of chunks) {
+        if (chunk) arr.push(parseInt(chunk, 8));
+        }
+    }
     return arr;
 }
 
@@ -84,6 +123,9 @@ function convertfromdecimal(arr) {
     }
     else if (outputstate == decimal) {
         return arr.join(' ');
+    }
+    else if (outputstate == octal) {
+        return arr.map(num => isNaN(num) ? "" : (num >>> 0).toString(8)).join(' ');
     }
 }
 
@@ -123,6 +165,17 @@ function checklastchar() {
             }, 1000);
         }
     }
+    if (inputstate == octal) {
+        if (!/^[0-7 ]*$/.test(val)) {
+            inputbox.value = val.replace(/[^0-7 ]/g, '');
+            inputbox.classList.add("error");
+            document.getElementById("output").value = "Invalid character detected! Only 0-7 and spaces are allowed.";
+            setTimeout(() => {
+                inputbox.classList.remove("error");
+                document.getElementById("output").value = outputval;
+            }, 1000);
+        }
+    }
 }
 
 function swap() {
@@ -132,6 +185,13 @@ function swap() {
     var outputstatetemp = outputstate;
     var selected1 = select1.value;
     var selected2 = select2.value;
+
+    localStorage.setItem("inputstate", outputstatetemp);
+    localStorage.setItem("outputstate", inputstatetemp);
+    localStorage.setItem("input", output);
+    localStorage.setItem("output", input);
+    localStorage.setItem("selected1", selected2);
+    localStorage.setItem("selected2", selected1);
 
     document.title = outputstatetemp + " to " + inputstatetemp + " Converter";
     select1.value = selected2;
